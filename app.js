@@ -60,10 +60,9 @@ app.get('/restaurants/:id', (req, res) => {
       rid: restaurantId,
       restaurant: oneRest
     });
-  }else{
-    res.render('404')
+  } else {
+    res.status(404).render('404');
   }
-
 
 });
 
@@ -79,5 +78,13 @@ app.post('/recommend', (req, res) => {
 
   res.redirect('/confirm');
 });
+
+// when isn't page. It will be the end
+app.use((req, res) => res.status(404).render('404'));
+
+// when is mistake on the server
+app.use((error, req, res, next) => {
+  res.status(500).render('500')
+})
 
 app.listen(3000);
